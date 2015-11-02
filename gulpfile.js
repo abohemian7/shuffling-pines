@@ -77,7 +77,7 @@ gulp.task('connect', function(){
 });
 
 gulp.task('watch', function(){
-    gulp.watch('src/js/**/*.js',['buildApp','test']);
+    gulp.watch('src/js/**/*.js',['buildApp']);
     gulp.watch('src/css/**/*.css',['buildCSS']);
     gulp.watch('src/**/*.html',['moveHTML']);
 })
@@ -91,4 +91,3 @@ gulp.task('default',['build','watch','connect']);
 
 
 //live reload that watches all JS, CSS, and HTML for changes
-

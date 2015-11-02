@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="shuffling">
+<html>
 
   <head>
     <meta charset="utf-8" />
@@ -13,7 +13,7 @@
     <script src="js/app.js"></script>
   </head>
 
-  <body>
+  <body ng-app="shuffling">
     <h1>Shuffling Pines</h1>
     <div class="row">
       <div class="col-md-12">
@@ -24,7 +24,7 @@
         </ul>
 
         <!-- Tab panes -->
-        <div class="tab-content">
+        <div class="tab-content" ng-controller="FormController as vm">
           <!-- Tab pane 1 -->
           <div role="tabpanel" class="tab-pane active" id="form">
             <div>
@@ -38,53 +38,79 @@
                   <label for="transition-date">Transition Date</label>
                   <input type="date" class="form-control" id="transition-date" placeholder="">
                 </div>
-                <div class="radio">
-                  <label>
-                    <input type="radio" name="pickup-dropoff" id="pickup" value="pickup" checked>
-                    Pick-up
-                  </label>
+                <br>
+                <div>
+                  <label for="guestStatus">Select an option</label>
+                  <br>
+                  <select ng-model="string" name="guestStatus" id="guestStatus">
+                    <option value="pickup">Pick-Up</option>
+                    <option value="dropoff">Drop-Off</option>
+                  </select>
                 </div>
-                <div class="radio">
-                  <label>
-                    <input type="radio" name="pickup-dropoff" id="dropoff" value="dropoff">
-                    Drop-off
-                  </label>
-                </div>
+                <br>
                 <div class="form-group">
                   <label for="location">Location</label>
                   <textarea class="form-control" id="location"></textarea>
                 </div>
-                <button type="submit" class="btn">Submit</button>
+                <button name="submitForm" type="submit" class="btn" ng-click="vm.onSubmit()">Submit</button>
               </form>
-
-              <!-- bound display -->
-              <div ng-show="false" class="col-md-6 well">
-                <div ng-show="false" class="form-group">
+            </div>
+            <div>
+              <label for="test-name">Test Name</label>
+              <input type="text" class="form-control" ng-model="vm.tester" id="test-name" placeholder="">
+              {{vm.tester}}
+            </div>
+            <div ng-repeat="n in vm.initGuests">
+            <!-- bound display -->
+            <div ng-if="!n.delete">
+              <div ng-show="true" class="col-md-7 well">
+                <div ng-show="true" class="form-group">
                   <label>Name: </label>
                   John Harvard
                 </div>
-                <div ng-show="false" class="form-group">
+                <div ng-show="true" class="form-group">
                   <label>Transition Date: </label>
-                  today!
+                  {{n}}
                 </div>
-                <div ng-show="false" class="form-group">
+                <div ng-show="true" class="form-group">
                   <label>Status: </label>
-                  drop-off
+                  {{n}}
                 </div>
-                <div ng-show="false" class="form-group">
+                <div ng-show="true" class="form-group">
                   <label>Location: </label>
-                  right here
+                  {{n}}
                 </div>
               </div>
-
             </div>
+            </div>
+
           </div>
 
           <!-- Tab pane 2 -->
           <div role="tabpanel" class="tab-pane" id="guests">
             <ul class="list-unstyled">
               <li>
-
+                <div ng-repeat="n in [1,2,3]">
+                  <!-- bound display -->
+                  <div ng-show="true" class="col-md-3 well">
+                    <div ng-show="true" class="form-group">
+                      <label>Name: </label>
+                      John Harvard
+                    </div>
+                    <div ng-show="true" class="form-group">
+                      <label>Transition Date: </label>
+                      {{n}}
+                    </div>
+                    <div ng-show="true" class="form-group">
+                      <label>Status: </label>
+                      {{n}}
+                    </div>
+                    <div ng-show="true" class="form-group">
+                      <label>Location: </label>
+                      {{n}}
+                    </div>
+                  </div>
+                </div>
               </li>
             </ul>
           </div>
