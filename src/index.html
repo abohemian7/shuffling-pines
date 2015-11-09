@@ -41,9 +41,9 @@
                 <div>
                   <label for="guestStatus">Select an option</label>
                   <br>
-                  <select ng-model="string" name="guestStatus" id="guestStatus"  ng-model="status">
-                    <option value="pickup">Pick-Up</option>
-                    <option value="dropoff">Drop-Off</option>
+                  <select name="guestStatus" id="guestStatus"  ng-model="status">
+                    <option value="Pick-Up">Pick-Up</option>
+                    <option value="Drop-Off">Drop-Off</option>
                   </select>
                 </div>
                 <br>
@@ -54,11 +54,7 @@
                 <button name="submitForm" type="submit" class="btn" ng-click="vm.onSubmit(name,transDate,status,location)">Submit</button>
               </form>
             </div>
-            <div>
-              <label for="test-name">Test Name</label>
-              <input type="text" class="form-control" ng-model="tester" id="test-name" placeholder="">
-              {{tester}}
-            </div>
+            <clock></clock>
             <guests></guests>
             <div ng-repeat="n in vm.initGuests">
             <!-- bound display -->
