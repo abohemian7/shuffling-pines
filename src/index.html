@@ -27,22 +27,21 @@
         <div class="tab-content" ng-controller="FormController as vm">
           <!-- Tab pane 1 -->
           <div role="tabpanel" class="tab-pane active" id="form">
-            <div>
-
+            <div >
               <form class="col-md-6 well">
                 <div class="form-group">
                   <label for="guest-name">Guest Name</label>
-                  <input type="text" class="form-control" id="guest-name" placeholder="">
+                  <input type="text" class="form-control" id="guest-name" placeholder="" ng-model="name">
                 </div>
                 <div class="form-group">
                   <label for="transition-date">Transition Date</label>
-                  <input type="date" class="form-control" id="transition-date" placeholder="">
+                  <input type="date" format="yyyy-mm-dd" class="form-control" id="transition-date" placeholder="yyyy-mm-dd" ng-model="transDate">
                 </div>
                 <br>
                 <div>
                   <label for="guestStatus">Select an option</label>
                   <br>
-                  <select ng-model="string" name="guestStatus" id="guestStatus">
+                  <select ng-model="string" name="guestStatus" id="guestStatus"  ng-model="status">
                     <option value="pickup">Pick-Up</option>
                     <option value="dropoff">Drop-Off</option>
                   </select>
@@ -50,16 +49,17 @@
                 <br>
                 <div class="form-group">
                   <label for="location">Location</label>
-                  <textarea class="form-control" id="location"></textarea>
+                  <textarea class="form-control" id="location" ng-model="location"></textarea>
                 </div>
-                <button name="submitForm" type="submit" class="btn" ng-click="vm.onSubmit()">Submit</button>
+                <button name="submitForm" type="submit" class="btn" ng-click="vm.onSubmit(name,transDate,status,location)">Submit</button>
               </form>
             </div>
             <div>
               <label for="test-name">Test Name</label>
-              <input type="text" class="form-control" ng-model="vm.tester" id="test-name" placeholder="">
-              {{vm.tester}}
+              <input type="text" class="form-control" ng-model="tester" id="test-name" placeholder="">
+              {{tester}}
             </div>
+            <guests></guests>
             <div ng-repeat="n in vm.initGuests">
             <!-- bound display -->
             <div ng-if="!n.delete">
