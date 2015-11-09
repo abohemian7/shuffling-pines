@@ -16,7 +16,8 @@ angular.module('shuffling', [])
 
         var vm = this;
 
-        var guestStatus = vm.guestStatus;
+        //var guestStatus = vm.guestStatus;
+        this.transDate = new Date('yyyy-mm-dd');
 
         this.onSubmit = function(name,transDate,status,location){
 
@@ -25,7 +26,7 @@ angular.module('shuffling', [])
             var Guest = {
             name : name || 'Default name',
             transitionDate : transDate || new Date(),
-            status : guestStatus || 'Drop-off',
+            status : status || 'Drop-off',
             location : location || 'nowhere'
             };
 
@@ -35,8 +36,6 @@ angular.module('shuffling', [])
             console.log(tester + JSON.stringify(Guest));
         };
 
-        this.transDate = new Date('yyyy-mm-dd');
-
         // $scope.initGuests = ['test','test2'];
         //$scope.notify = notify;
 
@@ -44,41 +43,42 @@ angular.module('shuffling', [])
 
 }])
 
-    .value('initGuest','John Harvard');
+    .value('initGuest','John Harvard')
 
-app.directive('guests', ['dateFilter','$interval',function(dateFilter, $interval){
+    .directive('guests', ['dateFilter','$interval',function(dateFilter, $interval){
 
-  var link = function(scope, element,attrs){
+        var link = function(scope, element,attrs){
 
-  var format = element.attr('format') || 'HH:mm:ss';
-  var updateTime = function(){
-    var now = Date.now();
+        var format = element.attr('format') || 'HH:mm:ss';
+        var updateTime = function(){
+        var now = Date.now();
 
-    element.html(dateFilter(now, format));
+            element.html(dateFilter(now, format));
 
-    };
+        };
 
-    $interval(updateTime,1000);
+        $interval(updateTime,1000);
 
-    updateTime();
+            updateTime();
 
-  };
+        };
 
-  return {
-    restrict: ['E'],
-    link: link
-  };
+        return {
+            restrict: ['E'],
+            link: link
+        };
 
-}])
+    }])
+
     .factory('guestFactory',['formFields', function($scope){
 
-    var Guest = {
-        name : $scope.name || 'Default name',
-        transitionDate : $scope.transitionDate || new Date(),
-        status : $scope.status || 'Drop-off',
-        location : $scope.location || 'nowhere'
-    };
+        var Guest = {
+            name : $scope.name || 'Default name',
+            transitionDate : $scope.transitionDate || new Date(),
+            status : $scope.status || 'Drop-off',
+            location : $scope.location || 'nowhere'
+        };
 
-    return {Guest};
+        return {Guest};
 
-}]);
+    }]);
