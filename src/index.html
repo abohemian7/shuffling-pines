@@ -83,27 +83,30 @@
           </div>
 
           <!-- Tab pane 2 -->
-          <div role="tabpanel" class="tab-pane" id="guests">
+          <div role="tabpanel" class="tab-pane" id="guests" ng-controller="GuestsController as vm">
             <ul class="list-unstyled">
               <li>
-                <div ng-repeat="n in [1,2,3]">
+                <div ng-repeat="n in vm.localGuests track by $index" ng-if="!n.delete">
                   <!-- bound display -->
-                  <div ng-show="true" class="col-md-3 well">
-                    <div ng-show="true" class="form-group">
-                      <label>Name: </label>
-                      John Harvard
-                    </div>
-                    <div ng-show="true" class="form-group">
-                      <label>Transition Date: </label>
-                      {{n}}
-                    </div>
-                    <div ng-show="true" class="form-group">
-                      <label>Status: </label>
-                      {{n}}
-                    </div>
-                    <div ng-show="true" class="form-group">
-                      <label>Location: </label>
-                      {{n}}
+                  <div>
+                    <div ng-show="true" class="col-md-7 well">
+                      <div ng-show="true" class="form-group">
+                        <label>Name: </label>
+                        {{n.name}}
+                      </div>
+                      <div ng-show="true" class="form-group">
+                        <label>Transition Date: </label>
+                        {{n.transitionDate}}
+                      </div>
+                      <div ng-show="true" class="form-group">
+                        <label>Status: </label>
+                        {{n.status}}
+                      </div>
+                      <div ng-show="true" class="form-group">
+                        <label>Location: </label>
+                        {{n.location}}
+                      </div>
+                      <button name="deleteItem" type="submit" class="btn" ng-click="vm.onDelete($index)">Delete</button>
                     </div>
                   </div>
                 </div>

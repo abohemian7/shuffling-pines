@@ -29,10 +29,40 @@ angular.module('shuffling', [])
         this.onSubmit = function(name,transDate,status,location){
 
             var Guest = {
-            name : name || 'Default name',
-            transitionDate : transDate.yyyymmdd() || new Date().yyyymmdd(),
-            status : status || 'Drop-off',
-            location : location || 'nowhere'
+                name : name || 'Default name',
+                transitionDate : transDate.yyyymmdd() || new Date().yyyymmdd(),
+                status : status || 'Drop-off',
+                location : location || 'nowhere'
+            };
+
+            console.log(JSON.stringify(Guest));
+            localGuests.addGuest(Guest);
+
+        };
+
+        this.onDelete = function(guestIndex){
+            localGuests.removeGuest(guestIndex);
+        }
+
+        console.log(initGuest);
+
+    }])
+
+    .controller('GuestsController', ['initGuest', 'notify','localGuests', function(initGuest, notify, localGuests){
+
+        var vm = this;
+
+        this.transDate = new Date().yyyymmdd;
+
+        this.localGuests = localGuests.data;
+
+        this.onSubmit = function(name,transDate,status,location){
+
+            var Guest = {
+                name : name || 'Default name',
+                transitionDate : transDate.yyyymmdd() || new Date().yyyymmdd(),
+                status : status || 'Drop-off',
+                location : location || 'nowhere'
             };
 
             console.log(JSON.stringify(Guest));
@@ -103,6 +133,13 @@ angular.module('shuffling', [])
         try{
 
             oldGuests = (JSON.parse(localStorage.getItem('guestList')) || []);
+
+            for(var i = 0; i < oldGuests.length; i++){
+                if(oldGuests[i].delete){
+                    oldGuests.splice(i,1);
+                    i--;
+                }
+            }
 
         } catch(e){
             console.log(e);
