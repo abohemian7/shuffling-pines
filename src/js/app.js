@@ -26,13 +26,14 @@ angular.module('shuffling', [])
 
         this.localGuests = localGuests.data;
 
-        this.onSubmit = function(name,transDate,status,location){
+        this.onSubmit = function(name,transDate,status,location, preferences){
 
             var Guest = {
                 name : name || 'Default name',
                 transitionDate : transDate.yyyymmdd() || new Date().yyyymmdd(),
                 status : status || 'Drop-off',
-                location : location || 'nowhere'
+                location : location || 'nowhere',
+                preferences: preferences || 'none'
             };
 
             console.log(JSON.stringify(Guest));
@@ -72,6 +73,7 @@ angular.module('shuffling', [])
 
         this.onDelete = function(guestIndex){
             localGuests.removeGuest(guestIndex);
+            this.confirm = false;
         }
 
         console.log(initGuest);
@@ -79,6 +81,23 @@ angular.module('shuffling', [])
     }])
 
     .value('initGuest','John Harvard')
+
+    .directive('ngConfirmClick', ['localGuests',
+        function(localGuests){
+            return {
+                link: function (scope, element, attr) {
+                    var msg = attr.ngConfirmClick;
+                    var clickAction = attr.confirmedClick;
+                    element.bind('click',function (event) {
+                        if ( window.confirm(msg) ) {
+                            this.removeGuest = function(aGuest){
+                                localGuests.removeGuest(aGuest);
+                            }
+                        }
+                    });
+                }
+            };
+        }])
 
     .directive('clock', ['dateFilter','$interval',function(dateFilter, $interval){
 
@@ -153,7 +172,8 @@ angular.module('shuffling', [])
                 name : 'Default name',
                 transitionDate : new Date().yyyymmdd(),
                 status : 'Drop-off',
-                location : 'nowhere'
+                location : 'somewhere',
+                preferences: 'none'
             };
 
             addGuest(newGuest);

@@ -41,41 +41,57 @@
                 <div>
                   <label for="guestStatus">Select an option</label>
                   <br>
-                  <select name="guestStatus" id="guestStatus"  ng-model="status">
+                  <select name="guestStatus" id="guestStatus" ng-model="status" selected="pickup">
                     <option value="Pick-Up">Pick-Up</option>
                     <option value="Drop-Off">Drop-Off</option>
                   </select>
                 </div>
                 <br>
-                <div class="form-group">
+                <div class="form-group" ng-show="status==='Pick-Up'">
                   <label for="location">Location</label>
                   <textarea class="form-control" id="location" ng-model="location"></textarea>
                 </div>
-                <button name="submitForm" type="submit" class="btn" ng-click="vm.onSubmit(name,transDate,status,location)">Submit</button>
+                <div class="form-group">
+                  <label for="preferences">Accomodation Preferences</label>
+                  <textarea class="form-control" id="preferences" ng-model="preferences" placeholder="Food, drink, sleep, and treatment preferences..."></textarea>
+                </div>
+                <button name="submitForm" type="submit" class="btn" ng-click="vm.onSubmit(name,transDate,status,location,preferences)">Submit</button>
               </form>
             </div>
-            <clock></clock>
+
             <div ng-repeat="n in vm.localGuests track by $index" ng-if="!n.delete">
             <!-- bound display -->
               <div>
-                <div ng-show="true" class="col-md-7 well">
+                <div class="col-md-7 well">
                   <div ng-show="true" class="form-group">
                     <label>Name: </label>
                     {{n.name}}
                   </div>
-                  <div ng-show="true" class="form-group">
+                  <div class="form-group">
                     <label>Transition Date: </label>
                     {{n.transitionDate}}
                   </div>
-                  <div ng-show="true" class="form-group">
+                  <div class="form-group">
                     <label>Status: </label>
                     {{n.status}}
                   </div>
-                  <div ng-show="true" class="form-group">
+                  <div ng-show="n.status === 'Pick-Up'" class="form-group">
                     <label>Location: </label>
                     {{n.location}}
                   </div>
-                  <button name="deleteItem" type="submit" class="btn" ng-click="vm.onDelete($index)">Delete</button>
+                  <div class="form-group">
+                    <label>Preferences: </label>
+                    {{n.preferences}}
+                  </div>
+                  <button
+                          name="deleteItem"
+                          type="submit"
+                          class="btn"
+                          ng-model="confirm"
+                          ng-click="confirm=true"
+                          >Delete</button>
+                  <button ng-show="confirm" ng-click="vm.onDelete($index)">Confirm Delete?</button>
+                  <button ng-show="confirm" ng-click="confirm = false">Cancel</button>
                 </div>
               </div>
             </div>
@@ -90,21 +106,26 @@
                   <!-- bound display -->
                   <div>
                     <div ng-show="true" class="col-md-7 well">
-                      <div ng-show="true" class="form-group">
+                      <div class="form-group">
                         <label>Name: </label>
                         {{n.name}}
+                        <!-- <input type="text" class="form-control" id="guest-name" value={{n.name}}> -->
                       </div>
-                      <div ng-show="true" class="form-group">
+                      <div class="form-group">
                         <label>Transition Date: </label>
                         {{n.transitionDate}}
                       </div>
-                      <div ng-show="true" class="form-group">
+                      <div class="form-group">
                         <label>Status: </label>
-                        {{n.status}}
+                          {{n.status}}
                       </div>
-                      <div ng-show="true" class="form-group">
+                      <div ng-show="n.status === 'Pick-Up'" class="form-group">
                         <label>Location: </label>
                         {{n.location}}
+                      </div>
+                      <div class="form-group">
+                        <label>Preferences: </label>
+                        {{n.preferences}}
                       </div>
                       <button name="deleteItem" type="submit" class="btn" ng-click="vm.onDelete($index)">Delete</button>
                     </div>
