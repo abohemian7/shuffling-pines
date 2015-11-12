@@ -78,44 +78,6 @@ angular.module('shuffling', [])
 
     }])
 
-    .directive('clock', ['dateFilter','$interval',function(dateFilter, $interval){
-
-        var link = function(scope, element){
-
-            var format = element.attr('format') || 'HH:mm:ss';
-            var updateTime = function(){
-                var now = Date.now();
-
-                element.html(dateFilter(now, format) + " hrllo");
-
-            };
-
-            $interval(updateTime,1000);
-
-            updateTime();
-
-        };
-
-        return {
-            restrict: ['E'],
-            link: link
-        };
-
-    }])
-
-    .factory('guestFactory',['formFields', function($scope){
-
-        var Guest = {
-            name : $scope.name || 'Default name',
-            transitionDate : $scope.transitionDate || new Date(),
-            status : $scope.status || 'Drop-off',
-            location : $scope.location || 'nowhere'
-        };
-
-        return {Guest};
-
-    }])
-
     // service = values by ref
     .service('localGuests',[function(){
 
