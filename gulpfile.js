@@ -82,12 +82,13 @@ gulp.task('watch', function(){
     gulp.watch('src/**/*.html',['moveHTML']);
 })
 
+gulp.task('test',['jshint','karma']);
 // *************************
 // the default task
 
 //gulp.task('default',['build','test','watch','connect']);
 
-gulp.task('default',['build','watch','connect']);
+gulp.task('default',['build','test','watch','connect']);
 
 
 //live reload that watches all JS, CSS, and HTML for changes

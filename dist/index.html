@@ -24,56 +24,74 @@
         </ul>
 
         <!-- Tab panes -->
-        <div class="tab-content" ng-controller="FormController">
+        <div class="tab-content">
           <!-- Tab pane 1 -->
-          <div role="tabpanel" class="tab-pane active" id="form">
-            <div>
-
+          <div role="tabpanel" class="tab-pane active" id="form"  ng-controller="FormController as vm">
+            <div >
               <form class="col-md-6 well">
                 <div class="form-group">
                   <label for="guest-name">Guest Name</label>
-                  <input type="text" class="form-control" id="guest-name" placeholder="">
+                  <input type="text" class="form-control" id="guest-name" placeholder="" ng-model="name">
                 </div>
                 <div class="form-group">
-                  <label for="transition-date">Transition Date</label>
-                  <input type="date" class="form-control" id="transition-date" placeholder="">
+                  <label for="transitionDate">Transition Date</label>
+                  <input type="date" format="yyyy-mm-dd" class="form-control" id="transitionDate" placeholder="yyyy-mm-dd" ng-model="transDate">
                 </div>
                 <br>
                 <div>
                   <label for="guestStatus">Select an option</label>
                   <br>
-                  <select ng-model="string" name="guestStatus" id="guestStatus">
-                    <option value="pickup">Pick-Up</option>
-                    <option value="dropoff">Drop-Off</option>
+                  <select name="guestStatus" id="guestStatus" ng-model="status" selected="pickup">
+                    <option value="Pick-Up">Pick-Up</option>
+                    <option value="Drop-Off">Drop-Off</option>
                   </select>
                 </div>
                 <br>
-                <div class="form-group">
+                <div class="form-group" ng-show="status==='Pick-Up'">
                   <label for="location">Location</label>
-                  <textarea class="form-control" id="location"></textarea>
+                  <textarea class="form-control" id="location" ng-model="location"></textarea>
                 </div>
-                <button name="submitForm" type="submit" class="btn" ngClick="onSubmit()">Submit</button>
+                <div class="form-group">
+                  <label for="preferences">Accomodation Preferences</label>
+                  <textarea class="form-control" id="preferences" ng-model="preferences" placeholder="Food, drink, sleep, and treatment preferences..."></textarea>
+                </div>
+                <button name="submitForm" type="submit" class="btn" ng-click="vm.onSubmit(name,transDate,status,location,preferences, name='',transDate='',status='',preferences='')">Submit</button>
               </form>
             </div>
 
-            <div ng-repeat="n in [1,2,3,4,5,6,7]">
+            <div ng-repeat="n in vm.localGuests track by $index" ng-if="!n.delete">
             <!-- bound display -->
-              <div ng-show="true" class="col-md-7 well">
-                <div ng-show="true" class="form-group">
-                  <label>Name: </label>
-                  John Harvard
-                </div>
-                <div ng-show="true" class="form-group">
-                  <label>Transition Date: </label>
-                  {{n}}
-                </div>
-                <div ng-show="true" class="form-group">
-                  <label>Status: </label>
-                  {{n}}
-                </div>
-                <div ng-show="true" class="form-group">
-                  <label>Location: </label>
-                  {{n}}
+              <div>
+                <div class="col-md-7 well">
+                  <div ng-show="true" class="form-group">
+                    <label>Name: </label>
+                    {{n.name}}
+                  </div>
+                  <div class="form-group">
+                    <label>Transition Date: </label>
+                    {{n.transitionDate}}
+                  </div>
+                  <div class="form-group">
+                    <label>Status: </label>
+                    {{n.status}}
+                  </div>
+                  <div ng-show="n.status === 'Pick-Up'" class="form-group">
+                    <label>Location: </label>
+                    {{n.location}}
+                  </div>
+                  <div class="form-group">
+                    <label>Preferences: </label>
+                    {{n.preferences}}
+                  </div>
+                  <button
+                          name="deleteItem"
+                          type="submit"
+                          class="btn"
+                          ng-model="confirm"
+                          ng-click="confirm=true"
+                          >Delete</button>
+                  <button ng-show="confirm" ng-click="vm.onDelete($index)">Confirm Delete?</button>
+                  <button ng-show="confirm" ng-click="confirm = false">Cancel</button>
                 </div>
               </div>
             </div>
@@ -81,27 +99,43 @@
           </div>
 
           <!-- Tab pane 2 -->
-          <div role="tabpanel" class="tab-pane" id="guests">
+          <div role="tabpanel" class="tab-pane" id="guests" ng-controller="GuestsController as vm">
             <ul class="list-unstyled">
               <li>
-                <div ng-repeat="n in [1,2,3]">
+                <div ng-repeat="n in vm.localGuests track by $index" ng-if="!n.delete">
                   <!-- bound display -->
-                  <div ng-show="true" class="col-md-3 well">
-                    <div ng-show="true" class="form-group">
-                      <label>Name: </label>
-                      John Harvard
-                    </div>
-                    <div ng-show="true" class="form-group">
-                      <label>Transition Date: </label>
-                      {{n}}
-                    </div>
-                    <div ng-show="true" class="form-group">
-                      <label>Status: </label>
-                      {{n}}
-                    </div>
-                    <div ng-show="true" class="form-group">
-                      <label>Location: </label>
-                      {{n}}
+                  <div>
+                    <div ng-show="true" class="col-md-7 well">
+                      <div class="form-group">
+                        <label>Name: </label>
+                        {{n.name}}
+                        <!-- <input type="text" class="form-control" id="guest-name" value={{n.name}}> -->
+                      </div>
+                      <div class="form-group">
+                        <label>Transition Date: </label>
+                        {{n.transitionDate}}
+                      </div>
+                      <div class="form-group">
+                        <label>Status: </label>
+                          {{n.status}}
+                      </div>
+                      <div ng-show="n.status === 'Pick-Up'" class="form-group">
+                        <label>Location: </label>
+                        {{n.location}}
+                      </div>
+                      <div class="form-group">
+                        <label>Preferences: </label>
+                        {{n.preferences}}
+                      </div>
+                      <button
+                              name="deleteItem"
+                              type="submit"
+                              class="btn"
+                              ng-model="confirm"
+                              ng-click="confirm=true"
+                      >Delete</button>
+                      <button ng-show="confirm" ng-click="vm.onDelete($index)">Confirm Delete?</button>
+                      <button ng-show="confirm" ng-click="confirm = false">Cancel</button>
                     </div>
                   </div>
                 </div>

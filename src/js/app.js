@@ -2,25 +2,14 @@ Date.prototype.yyyymmdd = function() {
     var yyyy = this.getFullYear().toString();
     var mm = (this.getMonth()+1).toString(); // getMonth() is zero-based
     var dd  = this.getDate().toString();
-    var retVal = yyyy +'-'+ (mm[1]?mm:"0"+mm[0]) +'-'+ (dd[1]?dd:"0"+dd[0]);
+    return retVal = yyyy +'-'+ (mm[1]?mm:"0"+mm[0]) +'-'+ (dd[1]?dd:"0"+dd[0]);
 
-    return retVal; // padding
+    //return retVal; // padding
 };
 
 angular.module('shuffling', [])
 
-    .factory('notify', ['$window', function(win) {
-        var msgs = [];
-        return function(msg) {
-         msgs.push(msg);
-         if (msgs.length == 3) {
-           win.alert(msgs.join("\n"));
-           msgs = [];
-         }
-        };
-    }])
-
-    .controller('FormController', ['notify','localGuests', function(notify, localGuests){
+    .controller('FormController', ['localGuests', function(localGuests){
 
         var vm = this;
 
@@ -41,15 +30,17 @@ angular.module('shuffling', [])
             console.log(JSON.stringify(Guest));
             localGuests.addGuest(Guest);
 
+            return 1;
+
         };
 
         this.onDelete = function(guestIndex){
             localGuests.removeGuest(guestIndex);
-        }
+        };
 
     }])
 
-    .controller('GuestsController', ['notify','localGuests', function(notify, localGuests){
+    .controller('GuestsController', ['localGuests', function(localGuests){
 
         var vm = this;
 
@@ -74,7 +65,7 @@ angular.module('shuffling', [])
         this.onDelete = function(guestIndex){
             localGuests.removeGuest(guestIndex);
             this.confirm = false;
-        }
+        };
 
     }])
 
@@ -85,7 +76,7 @@ angular.module('shuffling', [])
 
         var addGuest = function(aGuest){
 
-            oldGuests.push(aGuest)
+            oldGuests.push(aGuest);
             localStorage.setItem('guestList',JSON.stringify(oldGuests));
 
         };
@@ -103,7 +94,7 @@ angular.module('shuffling', [])
 
         } catch(e){
             console.log(e);
-        };
+        }
 
         console.log(oldGuests.length);
 

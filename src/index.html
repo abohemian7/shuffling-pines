@@ -55,8 +55,7 @@
                   <label for="preferences">Accomodation Preferences</label>
                   <textarea class="form-control" id="preferences" ng-model="preferences" placeholder="Food, drink, sleep, and treatment preferences..."></textarea>
                 </div>
-                <button name="submitForm" type="submit" class="btn"
-                        ng-click="vm.onSubmit(name,transDate,status,location,preferences, name='',transDate='',status='',preferences='')">Submit</button>
+                <button name="submitForm" type="submit" class="btn" ng-click="vm.onSubmit(name,transDate,status,location,preferences, name='',transDate='',status='',preferences='')">Submit</button>
               </form>
             </div>
 
@@ -128,7 +127,15 @@
                         <label>Preferences: </label>
                         {{n.preferences}}
                       </div>
-                      <button name="deleteItem" type="submit" class="btn" ng-click="vm.onDelete($index)">Delete</button>
+                      <button
+                              name="deleteItem"
+                              type="submit"
+                              class="btn"
+                              ng-model="confirm"
+                              ng-click="confirm=true"
+                      >Delete</button>
+                      <button ng-show="confirm" ng-click="vm.onDelete($index)">Confirm Delete?</button>
+                      <button ng-show="confirm" ng-click="confirm = false">Cancel</button>
                     </div>
                   </div>
                 </div>
