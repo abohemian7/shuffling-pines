@@ -13,7 +13,7 @@ var jshint = require('gulp-jshint');
 //uglify the JS and minify the CSS
 
 gulp.task('buildApp', function(){
-    return gulp.src(['src/js/**/*.js'])
+    return gulp.src(['src/js/app.js'])
         .pipe(concat('app.js'))
         .pipe(uglify())
         .pipe(gulp.dest('dist'))
