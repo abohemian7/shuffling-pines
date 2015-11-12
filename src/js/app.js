@@ -20,7 +20,7 @@ angular.module('shuffling', [])
         };
     }])
 
-    .controller('FormController', ['initGuest', 'notify','localGuests', function(initGuest, notify, localGuests){
+    .controller('FormController', ['notify','localGuests', function(notify, localGuests){
 
         var vm = this;
 
@@ -47,11 +47,9 @@ angular.module('shuffling', [])
             localGuests.removeGuest(guestIndex);
         }
 
-        console.log(initGuest);
-
     }])
 
-    .controller('GuestsController', ['initGuest', 'notify','localGuests', function(initGuest, notify, localGuests){
+    .controller('GuestsController', ['notify','localGuests', function(notify, localGuests){
 
         var vm = this;
 
@@ -77,8 +75,6 @@ angular.module('shuffling', [])
             localGuests.removeGuest(guestIndex);
             this.confirm = false;
         }
-
-        console.log(initGuest);
 
     }])
 
